@@ -12,6 +12,13 @@ const FADE_S = 1.8;
 const SCENES = 3;
 const CYCLE_S = SCENE_S * SCENES;
 
+/* One accent per facet: expedition orange, belt blue, water aqua */
+const ACCENT = {
+  alpine: "255,107,53",
+  bjj: "79,124,255",
+  swim: "34,211,238",
+};
+
 function sceneAlpha(cycle: number, index: number) {
   const start = index * SCENE_S;
   // distance into this scene's window, wrapping around the cycle
@@ -77,7 +84,10 @@ export function HeroCanvas() {
         for (let i = 0; i < cols; i++) grid[j * cols + i] = field(i * STEP, j * STEP);
       ctx.lineWidth = 1 * dpr;
       [0.35, 0.5, 0.65, 0.8, 0.92].forEach((level, li) => {
-        ctx.strokeStyle = `rgba(${ink}, ${(li % 2 === 0 ? 0.13 : 0.08) * a})`;
+        ctx.strokeStyle =
+          li === 2
+            ? `rgba(${ACCENT.alpine}, ${0.4 * a})`
+            : `rgba(${ink}, ${(li % 2 === 0 ? 0.13 : 0.08) * a})`;
         ctx.beginPath();
         for (let j = 0; j < rows - 1; j++) {
           for (let i = 0; i < cols - 1; i++) {
@@ -110,8 +120,8 @@ export function HeroCanvas() {
         ctx.stroke();
       });
       const main = peaks[0];
-      ctx.strokeStyle = `rgba(${ink}, ${0.3 * a})`;
-      ctx.fillStyle = `rgba(${ink}, ${0.3 * a})`;
+      ctx.strokeStyle = `rgba(${ACCENT.alpine}, ${0.65 * a})`;
+      ctx.fillStyle = `rgba(${ACCENT.alpine}, ${0.65 * a})`;
       ctx.beginPath();
       ctx.moveTo(main.x - 5 * dpr, main.y);
       ctx.lineTo(main.x + 5 * dpr, main.y);
@@ -132,17 +142,20 @@ export function HeroCanvas() {
         const dir = i % 2 === 0 ? 1 : -1;
         const start = t * (0.12 + i * 0.03) * dir + i * 1.1;
         const span = Math.PI * (0.9 + 0.35 * Math.sin(t * 0.3 + i));
-        ctx.strokeStyle = `rgba(${ink}, ${(i % 3 === 0 ? 0.14 : 0.09) * a})`;
+        ctx.strokeStyle =
+          i % 3 === 0
+            ? `rgba(${ACCENT.bjj}, ${0.42 * a})`
+            : `rgba(${ink}, ${0.09 * a})`;
         ctx.beginPath();
         ctx.arc(cx, cy, r, start, start + span);
         ctx.stroke();
         // leading grip point on each arc
-        ctx.fillStyle = `rgba(${ink}, ${0.22 * a})`;
+        ctx.fillStyle = `rgba(${ACCENT.bjj}, ${0.5 * a})`;
         ctx.beginPath();
         ctx.arc(cx + r * Math.cos(start + span), cy + r * Math.sin(start + span), 2 * dpr, 0, Math.PI * 2);
         ctx.fill();
       }
-      ctx.fillStyle = `rgba(${ink}, ${0.3 * a})`;
+      ctx.fillStyle = `rgba(${ACCENT.bjj}, ${0.65 * a})`;
       ctx.font = mono(10);
       ctx.fillText("BRAZILIAN JIU-JITSU — BLUE BELT", cx - base * 0.09, cy - base * 0.09 - 10 * dpr);
     };
@@ -156,7 +169,10 @@ export function HeroCanvas() {
         const amp = (6 + i * 2.2) * dpr;
         const k = 0.008 / dpr;
         const speed = 0.9 + i * 0.18;
-        ctx.strokeStyle = `rgba(${ink}, ${(i % 3 === 0 ? 0.14 : 0.08) * a})`;
+        ctx.strokeStyle =
+          i % 3 === 0
+            ? `rgba(${ACCENT.swim}, ${0.4 * a})`
+            : `rgba(${ink}, ${0.08 * a})`;
         ctx.beginPath();
         for (let x = 0; x <= w; x += 6 * dpr) {
           const yy = y + Math.sin(x * k + t * speed + i * 0.9) * amp;
@@ -167,16 +183,16 @@ export function HeroCanvas() {
       }
       // lane line + PB annotation
       const laneY = h * 0.46;
-      ctx.strokeStyle = `rgba(${ink}, ${0.2 * a})`;
+      ctx.strokeStyle = `rgba(${ACCENT.swim}, ${0.35 * a})`;
       ctx.setLineDash([2 * dpr, 8 * dpr]);
       ctx.beginPath();
       ctx.moveTo(0, laneY);
       ctx.lineTo(w, laneY);
       ctx.stroke();
       ctx.setLineDash([]);
-      ctx.fillStyle = `rgba(${ink}, ${0.3 * a})`;
+      ctx.fillStyle = `rgba(${ACCENT.swim}, ${0.65 * a})`;
       ctx.font = mono(10);
-      ctx.fillText("FREESTYLE 50M — 35.5S", w * 0.66, laneY - 8 * dpr);
+      ctx.fillText("FREESTYLE 50M — 29.8S", w * 0.66, laneY - 8 * dpr);
     };
 
     const painters = [drawAlpine, drawBjj, drawSwim];

@@ -20,6 +20,8 @@ export interface WorkItem {
   /** Small label next to the year on desktop, e.g. "video" */
   tag?: string;
   aspect: "wide" | "standard" | "video";
+  /** Stretch the cover to fill the grid row height on lg (for row-span cards) */
+  fill?: boolean;
   /** Tailwind column classes replicating the original scattered grid */
   cols: string;
   /** Real cover photo under public/, e.g. "/images/work/vidmuse.jpg" */

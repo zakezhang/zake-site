@@ -30,6 +30,7 @@ function Cover({ item }: { item: WorkItem }) {
         item.aspect === "wide" && "aspect-[16/10]",
         item.aspect === "video" && "aspect-video",
         item.aspect === "standard" && "aspect-[4/3]",
+        item.fill && "lg:aspect-auto lg:h-full",
       )}
     >
       {item.image ? (
@@ -79,9 +80,17 @@ function WorkCard({ item }: { item: WorkItem }) {
         target={external ? "_blank" : undefined}
         rel={external ? "noreferrer" : undefined}
         aria-label={`${item.title} - ${item.years}${external ? " (external)" : ""}`}
-        className="group block space-y-3 p-2"
+        className={cn(
+          "group block space-y-3 p-2",
+          item.fill && "lg:flex lg:h-full lg:flex-col",
+        )}
       >
-        <div className="relative w-full pointer-events-none select-none">
+        <div
+          className={cn(
+            "relative w-full pointer-events-none select-none",
+            item.fill && "lg:flex-1 lg:min-h-0",
+          )}
+        >
           {item.badge && (
             <span className="top-0 right-0 z-10 absolute bg-selection px-1 font-mono-2 text-black text-xs lg:text-sm">
               {item.badge}
