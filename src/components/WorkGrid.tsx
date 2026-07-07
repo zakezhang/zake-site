@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { works } from "@/lib/content";
+import { workGroups } from "@/lib/content";
 import type { WorkIcon, WorkItem } from "@/types/content";
 import { cn } from "@/lib/utils";
 import { IntroFilm } from "@/components/IntroFilm";
@@ -107,13 +107,26 @@ function WorkCard({ item }: { item: WorkItem }) {
 
 export function WorkGrid() {
   return (
-    <section id="work" className="px-4 lg:px-14 py-18 lg:py-24 w-full">
-      <div className="grid grid-cols-12 w-full gap-y-14 lg:gap-y-20">
+    <section
+      id="work"
+      className="px-4 lg:px-14 py-18 lg:py-24 w-full space-y-16 lg:space-y-24"
+    >
+      <div className="grid grid-cols-12 w-full">
         <IntroFilm />
-        {works.map((item) => (
-          <WorkCard key={item.no} item={item} />
-        ))}
       </div>
+      {workGroups.map((group) => (
+        <div key={group.label}>
+          <div className="flex items-center gap-3 p-2 mb-4 font-mono-2 text-xs lg:text-sm uppercase text-l3">
+            <span>{group.label}</span>
+            <span aria-hidden className="flex-1 border-t border-line" />
+          </div>
+          <div className="grid grid-cols-12 w-full gap-y-10 lg:gap-y-12">
+            {group.items.map((item) => (
+              <WorkCard key={item.no} item={item} />
+            ))}
+          </div>
+        </div>
+      ))}
     </section>
   );
 }
