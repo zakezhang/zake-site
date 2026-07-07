@@ -12,11 +12,8 @@ export const hero = {
   bio: {
     before: "I'm Zake Zhang, head of ",
     link: { label: "VidMuse", href: "https://vidmuse.ai" },
-    middle: " — an AI video agent that turns music into film, now past ",
-    // Masked easter egg: click to reveal
-    secret: { masked: "■■■■■■", revealed: "$10M+", hint: "Protected — ask me over coffee" },
     after:
-      ". Previously PM at CapCut. Off-screen I climb mountains and train jiu-jitsu.",
+      " — an AI video agent that turns music into film. Previously PM at CapCut and OnePlus. Off-screen I climb mountains, swim, and train jiu-jitsu.",
   },
   display: ["I turn", "life & code", "into stories"],
   seal: "ZAKE ZHANG • LIFE & CODE INTO STORIES • EST. 1993 • ",
@@ -228,10 +225,10 @@ export const stickyCta = {
 
 export const footer = {
   lines: {
-    row1Left: "Let's",
-    row1Right: "Make",
-    row2: "Something",
-    row3: "Worth Telling",
+    row1Left: "Live",
+    row1Right: "A Real Life",
+    row2: "Worth",
+    row3: "Remembering",
   },
   email: "zake.august93@gmail.com",
   links: [

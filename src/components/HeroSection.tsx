@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { hero } from "@/lib/content";
+import { HeroCanvas } from "@/components/HeroCanvas";
 import {
   BeltIcon,
   FilmIcon,
@@ -54,11 +54,9 @@ function RevealLine({ text, delay }: { text: string; delay: number }) {
 }
 
 export function HeroSection() {
-  const [revealed, setRevealed] = useState(false);
-  const { secret } = hero.bio;
-
   return (
     <div className="relative grid grid-cols-12 grid-rows-[auto_1fr] px-4 lg:px-14 py-18 lg:py-24 w-full min-h-dvh">
+      <HeroCanvas />
       <RotatingSeal />
       <div className="flex flex-col order-2 lg:order-1 lg:grid lg:grid-cols-12 col-span-12 font-mono text-base [animation:hsstFadeIn_.9s_.3s_both]">
         <span className="hidden lg:block lg:col-span-3 xl:col-span-2 lg:col-start-1 xl:col-start-1 p-2 font-sans">
@@ -85,25 +83,6 @@ export function HeroSection() {
           >
             {hero.bio.link.label}
           </a>
-          {hero.bio.middle}
-          <button
-            type="button"
-            title={secret.hint}
-            aria-label={secret.hint}
-            onClick={() => setRevealed((r) => !r)}
-            className="inline-flex items-baseline gap-[0.12em] mx-[0.06em] align-baseline cursor-pointer select-text text-l1 tabular-nums"
-          >
-            {(revealed ? secret.revealed : secret.masked)
-              .split("")
-              .map((ch, i) => (
-                <span
-                  key={i}
-                  className="inline-block min-w-[0.62em] text-center"
-                >
-                  {ch}
-                </span>
-              ))}
-          </button>
           {hero.bio.after}
         </span>
       </div>
