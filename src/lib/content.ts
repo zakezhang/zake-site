@@ -1,0 +1,216 @@
+import type { FooterLink, WorkItem } from "@/types/content";
+
+export const site = {
+  logo: { head: "zake", tail: ".zhang" },
+  clockPrefix: "GMT+8 CN",
+  title: "ZAKE©2026",
+};
+
+export const hero = {
+  discipline: ["Product &", "Storytelling"],
+  tagline: "Building in public. Turning life into a series.",
+  bio: {
+    before: "I'm Zake Zhang, head of ",
+    link: { label: "VidMuse", href: "https://vidmuse.ai" },
+    middle: " — an AI video agent that turns music into film, now past ",
+    // Masked easter egg: click to reveal
+    secret: { masked: "■■■■■■", revealed: "$10M+", hint: "Protected — ask me over coffee" },
+    after:
+      ". Previously PM at CapCut. Off-screen I climb mountains and train jiu-jitsu.",
+  },
+  display: ["I turn", "life & code", "into stories"],
+  seal: "ZAKE ZHANG • LIFE & CODE INTO STORIES • EST. 1993 • ",
+};
+
+export const about = {
+  lead: "I explore how AI reshapes filmmaking — building agents that turn a song, a script, a spark into moving image.",
+  body: [
+    { text: "I'm building " },
+    { text: "VidMuse™", href: "https://vidmuse.ai" },
+    { text: ", with " },
+    { text: "Kian", href: "https://www.heykian.com/en" },
+    { text: " and " },
+    { text: "Vibable", href: "https://vibable.sandaii.cn/" },
+    { text: ", and previously shaped " },
+    { text: "CapCut", href: "https://www.capcut.com" },
+    { text: " at ByteDance." },
+  ],
+  portrait: "/images/portrait.jpg",
+  portraitNote: "ZAKE ZHANG — 59.33°N 18.07°E",
+  facets: [
+    { icon: "mountain", label: "Alpine — Grade-1 · 7546m" },
+    { icon: "belt", label: "BJJ — Blue Belt" },
+    { icon: "wave", label: "Open Water" },
+    { icon: "film", label: "AI Filmmaking" },
+  ],
+};
+
+export const introFilm = {
+  title: "A Life of Never Settle",
+  cover: "/images/work/intro-film.jpg",
+  ytId: "BHOpxl1Lxwg",
+  bvid: "BV1A4411M76J",
+};
+
+export const works: WorkItem[] = [
+  {
+    no: "01",
+    image: "/images/work/vidmuse.jpg",
+    title: "VidMuse™",
+    code: "VIDMUSE",
+    years: "2025-NOW",
+    href: "https://vidmuse.ai",
+    external: true,
+    badge: "AI Product",
+    aspect: "wide",
+    cols: "col-span-12 lg:col-span-8 lg:col-start-5",
+  },
+  {
+    no: "02",
+    image: "/images/work/kian-home.jpg",
+    title: "Kian",
+    code: "KIAN",
+    years: "2025",
+    href: "https://www.heykian.com/en",
+    external: true,
+    badge: "Open Source",
+    tag: "vidmuse",
+    aspect: "standard",
+    cols: "col-span-12 lg:col-start-1 lg:col-span-6 xl:col-span-5",
+  },
+  {
+    no: "03",
+    image: "/images/work/vibable-home.jpg",
+    title: "Vibable",
+    code: "VIBABLE",
+    years: "2025",
+    href: "https://vibable.sandaii.cn/",
+    external: true,
+    badge: "Coding Agent",
+    tag: "vidmuse",
+    aspect: "standard",
+    cols: "col-span-12 lg:col-span-6 xl:col-span-5 lg:col-start-7 xl:col-start-7",
+  },
+  {
+    no: "04",
+    image: "/images/work/gapyear.jpg",
+    title: "IKEA × KTH Stockholm",
+    code: "GAP YEAR",
+    years: "2023-2024",
+    href: "https://www.bilibili.com/video/BV1oXo2YGEh9",
+    external: true,
+    badge: "Gap Year",
+    tag: "vlog",
+    aspect: "video",
+    cols: "col-span-6 lg:col-start-5 lg:col-span-4 xl:col-start-6 xl:col-span-3",
+  },
+  {
+    no: "05",
+    image: "/images/work/capcut.jpg",
+    title: "CapCut 剪映",
+    code: "CAPCUT",
+    years: "2020-2022",
+    href: "https://www.capcut.com",
+    external: true,
+    badge: "0 → 1",
+    aspect: "video",
+    cols: "col-span-6 lg:col-start-9 lg:col-span-4 xl:col-start-10 xl:col-span-3",
+  },
+  {
+    no: "06",
+    image: "/images/work/oneplus-8pro.jpg",
+    title: "OnePlus Imaging",
+    code: "ONEPLUS",
+    years: "2018-2020",
+    href: "https://www.youtube.com/live/rQEtyuhLEAA?t=2290",
+    external: true,
+    tag: "keynote",
+    aspect: "video",
+    cols: "col-span-12 lg:col-start-1 lg:col-span-4 xl:col-start-1 xl:col-span-3",
+  },
+  {
+    no: "07",
+    image: "/images/work/youtube-arr.jpg",
+    title: "YouTube @zakezhang",
+    code: "YT",
+    years: "14.5K SUBS",
+    href: "https://www.youtube.com/@zakezhang",
+    external: true,
+    badge: "Channel",
+    aspect: "video",
+    cols: "col-span-6 lg:col-start-5 lg:col-span-4 xl:col-start-5 xl:col-span-3",
+  },
+  {
+    no: "08",
+    image: "/images/work/bilibili.jpg",
+    title: "Bilibili 张子贺",
+    code: "BILI",
+    years: "108K FANS",
+    href: "https://space.bilibili.com/89944567",
+    external: true,
+    badge: "Channel",
+    aspect: "video",
+    cols: "col-span-6 lg:col-start-9 lg:col-span-4 xl:col-start-9 xl:col-span-3",
+  },
+  {
+    no: "09",
+    image: "/images/work/red.jpg",
+    title: "RED zake_august",
+    code: "RED",
+    years: "30K+ FANS",
+    href: "https://www.xiaohongshu.com",
+    external: true,
+    badge: "Channel",
+    aspect: "video",
+    cols: "col-span-6 lg:col-start-5 lg:col-span-4 xl:col-start-6 xl:col-span-3",
+  },
+  {
+    no: "10",
+    image: "/images/work/muztagh.jpg",
+    title: "Alpine: National Grade-1",
+    code: "ALPINE",
+    years: "2015-2020",
+    href: "#",
+    tag: "life",
+    aspect: "video",
+    cols: "col-span-6 lg:col-start-9 lg:col-span-4 xl:col-start-10 xl:col-span-3",
+  },
+  {
+    no: "11",
+    image: "/images/work/bjj.jpg",
+    title: "BJJ Blue Belt",
+    code: "BJJ",
+    years: "2022-2026",
+    href: "#",
+    tag: "life",
+    aspect: "video",
+    cols: "col-span-6 lg:col-start-1 lg:col-span-4 xl:col-start-2 xl:col-span-3",
+  },
+];
+
+export const stickyCta = {
+  motto: ["LIFE IS A DRUG"],
+  // Summited peaks, marked on the ridgeline (highest first)
+  peaks: [
+    { name: "MUZTAGH ATA", alt: "7546M" },
+    { name: "NAMA", alt: "5588M" },
+    { name: "MONT BLANC", alt: "4810M" },
+  ],
+  // Trekking routes walked, with classic distances
+  routes: "Luoke 70km · Kungsleden 110km · TMB 170km · Tre Cime 10km",
+};
+
+export const footer = {
+  lines: {
+    row1Left: "Let's",
+    row1Right: "Make",
+    row2: "Something",
+    row3: "Worth Telling",
+  },
+  email: "zake.august93@gmail.com",
+  links: [
+    { label: "YouTube", href: "https://www.youtube.com/@zakezhang" },
+    { label: "Bilibili", href: "https://space.bilibili.com/89944567" },
+    { label: "RED", href: "https://www.xiaohongshu.com" },
+  ] satisfies FooterLink[],
+};
