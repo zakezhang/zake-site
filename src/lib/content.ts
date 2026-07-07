@@ -38,9 +38,9 @@ export const about = {
   portrait: "/images/portrait.jpg",
   portraitNote: "ZAKE ZHANG — 59.33°N 18.07°E",
   facets: [
-    { icon: "mountain", label: "Alpine — Grade-1 · 7546m" },
-    { icon: "belt", label: "BJJ — Blue Belt" },
-    { icon: "wave", label: "Open Water" },
+    { icon: "mountain", label: "Mountaineer — 7546m" },
+    { icon: "belt", label: "Brazilian Jiu-Jitsu — Blue Belt" },
+    { icon: "wave", label: "Swimming — 50m in 35.5s" },
     { icon: "film", label: "AI Filmmaking" },
   ],
 };
@@ -63,7 +63,7 @@ export const workGroups: WorkGroup[] = [
     items: [
       {
         no: "01",
-        image: "/images/work/vidmuse.jpg",
+        image: "/images/work/vidmuse-2026.jpg",
         title: "VidMuse™",
         code: "VIDMUSE",
         years: "2025-NOW",
@@ -71,7 +71,7 @@ export const workGroups: WorkGroup[] = [
         external: true,
         badge: "AI Product",
         aspect: "wide",
-        cols: "col-span-12 lg:col-span-8 lg:col-start-3",
+        cols: "col-span-12 lg:col-span-8 lg:row-span-2",
       },
       {
         no: "02",
@@ -83,8 +83,8 @@ export const workGroups: WorkGroup[] = [
         external: true,
         badge: "Open Source",
         tag: "vidmuse",
-        aspect: "standard",
-        cols: "col-span-12 lg:col-span-6",
+        aspect: "video",
+        cols: "col-span-12 lg:col-span-4",
       },
       {
         no: "03",
@@ -96,8 +96,8 @@ export const workGroups: WorkGroup[] = [
         external: true,
         badge: "Coding Agent",
         tag: "vidmuse",
-        aspect: "standard",
-        cols: "col-span-12 lg:col-span-6",
+        aspect: "video",
+        cols: "col-span-12 lg:col-span-4",
       },
     ],
   },
@@ -190,7 +190,7 @@ export const workGroups: WorkGroup[] = [
       {
         no: "10",
         image: "/images/work/muztagh.jpg",
-        title: "Alpine: National Grade-1",
+        title: "Mountaineering",
         code: "ALPINE",
         years: "2015-2020",
         href: "#",
@@ -201,7 +201,8 @@ export const workGroups: WorkGroup[] = [
       {
         no: "11",
         image: "/images/work/bjj.jpg",
-        title: "BJJ Blue Belt",
+        title: "Brazilian Jiu-Jitsu",
+        badge: "Blue Belt",
         code: "BJJ",
         years: "2022-2026",
         href: "#",
