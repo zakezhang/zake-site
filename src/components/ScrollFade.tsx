@@ -52,19 +52,12 @@ export function ScrollFade() {
       {Array.from({ length: STEPS }, (_, i) => (
         <div key={i} className="absolute inset-0" style={layerStyle(i)} />
       ))}
-      {/* glass edge glint + a whisper of surface tint */}
+      {/* a whisper of surface tint toward the edge */}
       <div
         className="absolute inset-0"
         style={{
           background:
             "linear-gradient(to bottom, transparent 30%, rgba(var(--label-d), 0.03) 70%, rgba(var(--background-deep), 0.35) 100%)",
-        }}
-      />
-      <div
-        className="absolute inset-x-0 top-4 h-px opacity-40"
-        style={{
-          background:
-            "linear-gradient(to right, transparent, rgba(var(--label-d), 0.25) 30%, rgba(var(--label-d), 0.25) 70%, transparent)",
         }}
       />
     </div>
