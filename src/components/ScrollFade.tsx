@@ -4,10 +4,28 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Apple-style frosted lip pinned to the bottom of the viewport: incoming
- * content rises through a soft blur + fade instead of appearing abruptly.
+ * Apple-style progressive glass pinned to the bottom of the viewport.
+ * A single blur reads as a hard band, so this stacks masked layers whose
+ * blur radius doubles step by step — the material gets denser toward the
+ * edge — while rising saturation gives the refraction-through-glass feel.
  * Hides itself once the scroll container reaches the very end.
  */
+const STEPS = 6;
+
+function layerStyle(i: number): React.CSSProperties {
+  const blur = 0.5 * 2 ** i; // 0.5 → 16px
+  // each layer fades in a little lower than the previous one
+  const start = (i / STEPS) * 78;
+  const full = Math.min(100, start + 34);
+  const mask = `linear-gradient(to bottom, transparent ${start}%, black ${full}%)`;
+  return {
+    backdropFilter: `blur(${blur}px) saturate(${1 + i * 0.09})`,
+    WebkitBackdropFilter: `blur(${blur}px) saturate(${1 + i * 0.09})`,
+    maskImage: mask,
+    WebkitMaskImage: mask,
+  };
+}
+
 export function ScrollFade() {
   const [atEnd, setAtEnd] = useState(false);
 
@@ -27,19 +45,28 @@ export function ScrollFade() {
     <div
       aria-hidden
       className={cn(
-        "z-40 fixed inset-x-0 bottom-0 h-24 lg:h-32 pointer-events-none transition-opacity duration-500",
+        "z-40 fixed inset-x-0 bottom-0 h-28 lg:h-40 pointer-events-none transition-opacity duration-700 ease-out",
         atEnd ? "opacity-0" : "opacity-100",
       )}
-      style={{
-        backdropFilter: "blur(6px)",
-        WebkitBackdropFilter: "blur(6px)",
-        maskImage:
-          "linear-gradient(to top, black 0%, black 30%, transparent 100%)",
-        WebkitMaskImage:
-          "linear-gradient(to top, black 0%, black 30%, transparent 100%)",
-        background:
-          "linear-gradient(to top, rgb(var(--background-deep) / 0.6), transparent)",
-      }}
-    />
+    >
+      {Array.from({ length: STEPS }, (_, i) => (
+        <div key={i} className="absolute inset-0" style={layerStyle(i)} />
+      ))}
+      {/* glass edge glint + a whisper of surface tint */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent 30%, rgba(var(--label-d), 0.03) 70%, rgba(var(--background-deep), 0.35) 100%)",
+        }}
+      />
+      <div
+        className="absolute inset-x-0 top-4 h-px opacity-40"
+        style={{
+          background:
+            "linear-gradient(to right, transparent, rgba(var(--label-d), 0.25) 30%, rgba(var(--label-d), 0.25) 70%, transparent)",
+        }}
+      />
+    </div>
   );
 }
