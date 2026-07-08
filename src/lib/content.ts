@@ -15,7 +15,11 @@ export const hero = {
     after:
       " — an AI video agent that turns music into film. Previously PM at CapCut and OnePlus. Off-screen I climb mountains, swim, and train jiu-jitsu.",
   },
-  display: ["I turn", "life & code", "into stories"],
+  display: [
+    { text: "I turn" },
+    { text: "life & code" },
+    { text: "into stories", highlight: true },
+  ],
   seal: "ZAKE ZHANG • LIFE & CODE INTO STORIES • EST. 1993 • ",
 };
 
@@ -157,7 +161,7 @@ export const workGroups: WorkGroup[] = [
       {
         no: "08",
         image: "/images/work/bilibili.jpg",
-        title: "Bilibili 张子贺",
+        title: "Bilibili @张子贺 Zake",
         code: "BILI",
         years: "108K FANS",
         href: "https://space.bilibili.com/89944567",
@@ -169,10 +173,10 @@ export const workGroups: WorkGroup[] = [
       {
         no: "09",
         image: "/images/work/red2.jpg",
-        title: "RED zake_august",
+        title: "RED @张子贺 Zake",
         code: "RED",
         years: "30K+ FANS",
-        href: "https://youtu.be/5UqL94DZebk",
+        href: "https://www.xiaohongshu.com/user/profile/5d3493a000000000100134e5",
         external: true,
         badge: "Channel",
         aspect: "video",
@@ -185,12 +189,13 @@ export const workGroups: WorkGroup[] = [
     items: [
       {
         no: "10",
-        image: "/images/work/muztagh.jpg",
-        title: "Mountaineering",
-        code: "ALPINE",
-        years: "2015-2020",
-        href: "#",
-        tag: "life",
+        image: "/images/work/muztagh2.jpg",
+        title: "Muztagh Ata 慕士塔格攀登",
+        code: "MUZTAGH ATA",
+        years: "7546M",
+        href: "https://www.youtube.com/watch?v=fWKfwCIem4c",
+        external: true,
+        tag: "climb",
         aspect: "video",
         cols: "col-span-12 sm:col-span-6 lg:col-span-4",
       },
@@ -272,7 +277,7 @@ export const stickyCta = {
 };
 
 export const footer = {
-  line: "Live a life worth remembering",
+  line: "Let's live a life worth remembering",
   email: "zake.august93@gmail.com",
   links: [
     { label: "YouTube", href: "https://www.youtube.com/@zakezhang" },

@@ -40,14 +40,28 @@ function RotatingSeal() {
   );
 }
 
-function RevealLine({ text, delay }: { text: string; delay: number }) {
+function RevealLine({
+  text,
+  delay,
+  highlight,
+}: {
+  text: string;
+  delay: number;
+  highlight?: boolean;
+}) {
   return (
     <span className="block overflow-hidden">
       <span
         className="block [animation:lineReveal_.7s_var(--ease-66)_both]"
         style={{ animationDelay: `${delay}ms` }}
       >
-        {text}
+        {highlight ? (
+          <span className="inline-block w-fit bg-selection px-[0.08em] text-black">
+            {text}
+          </span>
+        ) : (
+          text
+        )}
       </span>
     </span>
   );
@@ -88,7 +102,12 @@ export function HeroSection() {
       </div>
       <div className="flex flex-col self-end order-1 lg:order-2 col-span-12 px-2 font-bold text-[13svw] lg:text-[9svw] leading-[0.98] tracking-tight">
         {hero.display.map((line, i) => (
-          <RevealLine key={line} text={line} delay={120 + i * 70} />
+          <RevealLine
+            key={line.text}
+            text={line.text}
+            highlight={line.highlight}
+            delay={120 + i * 70}
+          />
         ))}
       </div>
     </div>

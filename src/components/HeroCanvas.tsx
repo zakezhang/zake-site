@@ -9,14 +9,15 @@ import { useEffect, useRef } from "react";
  */
 const SCENE_S = 9;
 const FADE_S = 1.8;
-const SCENES = 3;
+const SCENES = 4;
 const CYCLE_S = SCENE_S * SCENES;
 
-/* One accent per facet: expedition orange, belt blue, water aqua */
+/* One accent per facet: expedition orange, belt blue, water aqua, stage violet */
 const ACCENT = {
   alpine: "255,107,53",
   bjj: "79,124,255",
   swim: "34,211,238",
+  music: "168,130,255",
 };
 
 function sceneAlpha(cycle: number, index: number) {
@@ -59,7 +60,28 @@ export function HeroCanvas() {
     });
     io.observe(wrap);
 
+    // Liquid pointer field, in canvas pixels; smoothed toward the cursor
+    const pointer = { tx: -1e4, ty: -1e4, x: -1e4, y: -1e4, energy: 0, inside: false };
+    const onMove = (e: PointerEvent) => {
+      const r = wrap.getBoundingClientRect();
+      const inside =
+        e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      pointer.inside = inside;
+      if (inside) {
+        pointer.tx = (e.clientX - r.left) * dpr;
+        pointer.ty = (e.clientY - r.top) * dpr;
+      }
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+
     const mono = (px: number) => `${px * dpr}px monospace`;
+
+    // Gaussian bump from the cursor, used to warp scenes near the pointer
+    const bump = (x: number, y: number, radius: number, gain: number) => {
+      if (pointer.energy < 0.01) return 0;
+      const d = Math.hypot(x - pointer.x, y - pointer.y) / radius;
+      return gain * pointer.energy * Math.exp(-d * d);
+    };
 
     const drawAlpine = (ink: string, a: number, t: number) => {
       const { width: w, height: h } = canvas;
@@ -74,7 +96,8 @@ export function HeroCanvas() {
           const d = Math.hypot(x - p.x, y - p.y) / (p.s * diag);
           v += p.a * Math.exp(-d * d);
         }
-        return v + 0.05 * Math.sin(x / (180 * dpr) + t * 0.6);
+        // cursor pushes the terrain up — contours ripple around it
+        return v + 0.05 * Math.sin(x / (180 * dpr) + t * 0.6) + bump(x, y, 150 * dpr, 0.9);
       };
       const STEP = 32 * dpr;
       const cols = Math.ceil(w / STEP) + 1;
@@ -175,7 +198,8 @@ export function HeroCanvas() {
             : `rgba(${ink}, ${0.08 * a})`;
         ctx.beginPath();
         for (let x = 0; x <= w; x += 6 * dpr) {
-          const yy = y + Math.sin(x * k + t * speed + i * 0.9) * amp;
+          const yy =
+            y + Math.sin(x * k + t * speed + i * 0.9) * amp - bump(x, y, 120 * dpr, 26 * dpr);
           if (x === 0) ctx.moveTo(x, yy);
           else ctx.lineTo(x, yy);
         }
@@ -195,8 +219,45 @@ export function HeroCanvas() {
       ctx.fillText("FREESTYLE 50M — 29.8S", w * 0.66, laneY - 8 * dpr);
     };
 
-    const painters = [drawAlpine, drawBjj, drawSwim];
+    const drawMusic = (ink: string, a: number, t: number) => {
+      const { width: w, height: h } = canvas;
+      const A = ACCENT.music;
+      // Faint staff lines across the middle band
+      const staffTop = h * 0.44;
+      const gap = 14 * dpr;
+      ctx.lineWidth = 1 * dpr;
+      ctx.strokeStyle = `rgba(${ink}, ${0.1 * a})`;
+      ctx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        ctx.moveTo(0, staffTop + i * gap);
+        ctx.lineTo(w, staffTop + i * gap);
+      }
+      ctx.stroke();
+      // Notes streaming right-to-left in loose lanes around the staff
+      const GLYPHS = ["♪", "♩", "♫", "♬"];
+      const N = 14;
+      const margin = 60 * dpr;
+      for (let i = 0; i < N; i++) {
+        const speed = (36 + (i % 5) * 20) * dpr;
+        const size = (15 + (i % 4) * 7) * dpr;
+        const laneY = staffTop + (((i * 53) % (gap * 9)) - gap * 2);
+        const x =
+          w + margin - ((t * speed + (i * (w + 2 * margin)) / N * 1.7) % (w + 2 * margin));
+        const bob = Math.sin(t * 1.4 + i) * 5 * dpr;
+        ctx.fillStyle =
+          i % 3 === 0 ? `rgba(${A}, ${0.5 * a})` : `rgba(${ink}, ${0.18 * a})`;
+        ctx.font = `${size}px sans-serif`;
+        ctx.fillText(GLYPHS[i % 4], x, laneY + bob);
+      }
+      ctx.fillStyle = `rgba(${A}, ${0.65 * a})`;
+      ctx.font = mono(10);
+      ctx.fillText("CELLO × RAP", w * 0.66, staffTop - 16 * dpr);
+    };
+
+    const painters = [drawAlpine, drawBjj, drawSwim, drawMusic];
     let raf = 0;
+
+    const ACCENTS = [ACCENT.alpine, ACCENT.bjj, ACCENT.swim, ACCENT.music];
 
     const draw = (now: number) => {
       if (!reduced) raf = requestAnimationFrame(draw);
@@ -206,11 +267,39 @@ export function HeroCanvas() {
       const ink = getComputedStyle(document.documentElement)
         .getPropertyValue("--label-d")
         .trim();
+
+      // Smooth the pointer toward the cursor; energy fades when it leaves
+      pointer.x += (pointer.tx - pointer.x) * 0.12;
+      pointer.y += (pointer.ty - pointer.y) * 0.12;
+      const targetE = pointer.inside ? 1 : 0;
+      pointer.energy += (targetE - pointer.energy) * 0.06;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let dominant = 0;
+      let best = 0;
       painters.forEach((paint, i) => {
         const a = reduced ? (i === 0 ? 1 : 0) : sceneAlpha(cycle, i);
+        if (a > best) {
+          best = a;
+          dominant = i;
+        }
         if (a > 0.01) paint(ink, a, t);
       });
+
+      // Liquid glow trailing the cursor, tinted by the active scene
+      if (pointer.energy > 0.02) {
+        const rad = 130 * dpr;
+        const g = ctx.createRadialGradient(
+          pointer.x, pointer.y, 0, pointer.x, pointer.y, rad,
+        );
+        g.addColorStop(0, `rgba(${ACCENTS[dominant]}, ${0.16 * pointer.energy})`);
+        g.addColorStop(1, `rgba(${ACCENTS[dominant]}, 0)`);
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(pointer.x, pointer.y, rad, 0, Math.PI * 2);
+        ctx.fill();
+      }
     };
     raf = requestAnimationFrame(draw);
 
@@ -218,6 +307,7 @@ export function HeroCanvas() {
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
+      window.removeEventListener("pointermove", onMove);
     };
   }, []);
 

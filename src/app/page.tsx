@@ -3,6 +3,7 @@ import { BackgroundCanvas } from "@/components/BackgroundCanvas";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { HeroSection } from "@/components/HeroSection";
 import { Loader } from "@/components/Loader";
+import { ScrollFade } from "@/components/ScrollFade";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { StickyCta } from "@/components/StickyCta";
@@ -25,6 +26,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <ScrollFade />
       <BackgroundCanvas />
     </>
   );

@@ -3,6 +3,7 @@ import { workGroups } from "@/lib/content";
 import type { WorkIcon, WorkItem } from "@/types/content";
 import { cn } from "@/lib/utils";
 import { IntroFilm } from "@/components/IntroFilm";
+import { Reveal } from "@/components/Reveal";
 import {
   BeltIcon,
   FramesIcon,
@@ -71,10 +72,10 @@ function Cover({ item }: { item: WorkItem }) {
   );
 }
 
-function WorkCard({ item }: { item: WorkItem }) {
+function WorkCard({ item, delay }: { item: WorkItem; delay: number }) {
   const external = item.external ?? item.href.startsWith("http");
   return (
-    <article className={item.cols}>
+    <Reveal delay={delay} className={item.cols}>
       <a
         href={item.href}
         target={external ? "_blank" : undefined}
@@ -110,7 +111,7 @@ function WorkCard({ item }: { item: WorkItem }) {
           </div>
         </div>
       </a>
-    </article>
+    </Reveal>
   );
 }
 
@@ -125,13 +126,13 @@ export function WorkGrid() {
       </div>
       {workGroups.map((group) => (
         <div key={group.label}>
-          <div className="flex items-center gap-3 p-2 mb-4 font-mono-2 text-xs lg:text-sm uppercase text-l3">
+          <Reveal className="flex items-center gap-3 p-2 mb-4 font-mono-2 text-xs lg:text-sm uppercase text-l3">
             <span>{group.label}</span>
             <span aria-hidden className="flex-1 border-t border-line" />
-          </div>
+          </Reveal>
           <div className="grid grid-cols-12 w-full gap-y-10 lg:gap-y-12">
-            {group.items.map((item) => (
-              <WorkCard key={item.no} item={item} />
+            {group.items.map((item, i) => (
+              <WorkCard key={item.no} item={item} delay={i * 90} />
             ))}
           </div>
         </div>
