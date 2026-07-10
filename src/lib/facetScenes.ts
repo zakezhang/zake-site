@@ -198,9 +198,10 @@ function drawMusic(env: SceneEnv) {
     ctx.font = `${size}px sans-serif`;
     ctx.fillText(GLYPHS[i % 4], x, y);
   }
-  ctx.fillStyle = `rgba(${A}, ${0.6 * a})`;
+  ctx.fillStyle = `rgba(${A}, ${0.65 * a})`;
   ctx.font = mono(env, 10);
-  ctx.fillText("CELLO × RAP", w * 0.05, h * 0.94);
+  // upper-left, clear of the header rows, the motto and the glass lip
+  ctx.fillText("I PLAY CELLO & RAP", w * 0.05, h * 0.16);
 }
 
 /* Two bodies drawn to a shared center — clash, part, return. The cursor
@@ -231,11 +232,15 @@ function createBjjPainter() {
     const dt = Math.min(0.05, Math.max(0, t - lastT));
     lastT = t;
 
-    // physics: spring to center, cursor repulsion, light damping
-    const K = 1.4;
+    // physics: spring to center + pull toward each other (frequent clashes)
+    // + a gentle swirl so they orbit while closing in
+    const K = 2.0;
+    const K_PAIR = 2.4;
+    const SWIRL = 0.9;
     for (const b of balls) {
-      let ax = (cx - b.x) * K;
-      let ay = (cy - b.y) * K;
+      const other = balls[b === balls[0] ? 1 : 0];
+      let ax = (cx - b.x) * K + (other.x - b.x) * K_PAIR - (cy - b.y) * SWIRL;
+      let ay = (cy - b.y) * K + (other.y - b.y) * K_PAIR + (cx - b.x) * SWIRL;
       if (pointer.energy > 0.02) {
         const dx = b.x - pointer.x;
         const dy = b.y - pointer.y;
@@ -246,6 +251,13 @@ function createBjjPainter() {
       }
       b.vx = (b.vx + ax * dt) * (1 - 0.06 * dt);
       b.vy = (b.vy + ay * dt) * (1 - 0.06 * dt);
+      // keep the sparring brisk but never frantic
+      const speed = Math.hypot(b.vx, b.vy);
+      const vmax = 420 * dpr;
+      if (speed > vmax) {
+        b.vx *= vmax / speed;
+        b.vy *= vmax / speed;
+      }
       b.x += b.vx * dt;
       b.y += b.vy * dt;
       b.trail.push({ x: b.x, y: b.y });
@@ -321,9 +333,10 @@ function createBjjPainter() {
       }
     });
 
-    ctx.fillStyle = `rgba(${ACCENT.bjj}, ${0.6 * a})`;
+    // caption rides beside the zen anchor, tied to the clash it names
+    ctx.fillStyle = `rgba(${ACCENT.bjj}, ${0.65 * a})`;
     ctx.font = mono(env, 10);
-    ctx.fillText("BRAZILIAN JIU-JITSU — BLUE BELT", w * 0.05, h * 0.9);
+    ctx.fillText("BJJ — AJP CHINA GOLD", cx + 12 * dpr, cy - 10 * dpr);
   };
 }
 
