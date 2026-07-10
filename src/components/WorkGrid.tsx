@@ -2,7 +2,7 @@ import Image from "next/image";
 import { workGroups } from "@/lib/content";
 import type { WorkIcon, WorkItem } from "@/types/content";
 import { cn } from "@/lib/utils";
-import { IntroFilm } from "@/components/IntroFilm";
+import { FilmCard, IntroFilm } from "@/components/IntroFilm";
 import { Reveal } from "@/components/Reveal";
 import {
   BeltIcon,
@@ -130,6 +130,14 @@ export function WorkGrid() {
             <span>{group.label}</span>
             <span aria-hidden className="flex-1 border-t border-line" />
           </Reveal>
+          {group.film && (
+            <Reveal className="grid grid-cols-12 w-full mb-10 lg:mb-12">
+              <FilmCard
+                {...group.film}
+                className="col-span-12 lg:col-span-8 lg:col-start-3"
+              />
+            </Reveal>
+          )}
           <div className="grid grid-cols-12 w-full gap-y-10 lg:gap-y-12">
             {group.items.map((item, i) => (
               <WorkCard key={item.no} item={item} delay={i * 90} />

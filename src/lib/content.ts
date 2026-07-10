@@ -56,6 +56,14 @@ export const introFilm = {
 export interface WorkGroup {
   label: string;
   items: WorkItem[];
+  /** Optional click-to-play film shown above the group's cards */
+  film?: {
+    title: string;
+    cover: string;
+    ytId: string;
+    bvid: string;
+    badge: string;
+  };
 }
 
 export const workGroups: WorkGroup[] = [
@@ -145,13 +153,20 @@ export const workGroups: WorkGroup[] = [
   },
   {
     label: "Channels",
+    film: {
+      title: "Introducing Zake Zhang Pro",
+      cover: "/images/work/channels-film.jpg",
+      ytId: "FHG5-uivlbc",
+      bvid: "BV17h4y1v7jT",
+      badge: "Keynote Cut",
+    },
     items: [
       {
         no: "07",
         image: "/images/work/youtube-arr.jpg",
         title: "YouTube @zakezhang",
         code: "YT",
-        years: "14.5K SUBS",
+        years: "SINCE 2014 · 14.5K SUBS",
         href: "https://www.youtube.com/@zakezhang",
         external: true,
         badge: "Channel",
@@ -163,7 +178,7 @@ export const workGroups: WorkGroup[] = [
         image: "/images/work/bilibili.jpg",
         title: "Bilibili @张子贺 Zake",
         code: "BILI",
-        years: "108K FANS",
+        years: "SINCE 2017 · 108K FANS",
         href: "https://space.bilibili.com/89944567",
         external: true,
         badge: "Channel",
@@ -175,7 +190,7 @@ export const workGroups: WorkGroup[] = [
         image: "/images/work/red2.jpg",
         title: "RED @张子贺 Zake",
         code: "RED",
-        years: "30K+ FANS",
+        years: "SINCE 2021 · 30K+ FANS",
         href: "https://www.xiaohongshu.com/user/profile/5d3493a000000000100134e5",
         external: true,
         badge: "Channel",
