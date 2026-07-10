@@ -55,7 +55,7 @@ function Ridgeline() {
 
 export function StickyCta() {
   return (
-    <div id="cta" className="relative h-[160vh] text-l1">
+    <div id="cta" className="relative h-[160vh] text-l1 snap-start">
       <div className="top-0 sticky grid grid-cols-12 grid-rows-6 px-4 lg:px-14 py-18 h-dvh overflow-hidden">
         <Ridgeline />
         <div className="relative flex flex-col justify-center items-center col-span-12 row-span-6 font-bold text-[9svw] leading-[1.05] uppercase">

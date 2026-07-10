@@ -4,6 +4,7 @@ import { GrainOverlay } from "@/components/GrainOverlay";
 import { HeroSection } from "@/components/HeroSection";
 import { Loader } from "@/components/Loader";
 import { ScrollFade } from "@/components/ScrollFade";
+import { ScrollRail } from "@/components/ScrollRail";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { StickyCta } from "@/components/StickyCta";
@@ -16,7 +17,7 @@ export default function Home() {
       <GrainOverlay />
       <SiteHeader />
       <div className="fixed inset-0 w-full h-full">
-        <div className="w-full h-full overflow-y-auto overscroll-contain no-scrollbar">
+        <div className="w-full h-full overflow-y-auto overscroll-contain no-scrollbar snap-y snap-mandatory scroll-smooth">
           <div className="[animation:hsstFadeIn_.9s_.5s_both]">
             <HeroSection />
             <AboutSection />
@@ -27,6 +28,7 @@ export default function Home() {
         </div>
       </div>
       <ScrollFade />
+      <ScrollRail />
       <BackgroundCanvas />
     </>
   );

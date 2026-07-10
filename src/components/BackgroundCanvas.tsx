@@ -50,10 +50,30 @@ export function BackgroundCanvas() {
     const STEP = 26 * dpr;
     const LEVELS = [0.32, 0.42, 0.52, 0.62, 0.72, 0.82, 0.9];
 
+    // Cache the ink color; re-read only when the theme class flips
+    const readInk = () =>
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--label-d")
+        .trim();
+    let ink = readInk();
+    const themeWatch = new MutationObserver(() => {
+      ink = readInk();
+    });
+    themeWatch.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    let frame = 0;
+
     const draw = (now: number) => {
       if (!reduced) raf = requestAnimationFrame(draw);
+      // The drift is slow — painting at half rate frees the main thread
+      // for scrolling through the CTA/footer overlap
+      frame++;
+      if (!reduced && frame % 2 === 1) return;
 
-      fadeState.current += (fadeState.target - fadeState.current) * 0.05;
+      fadeState.current += (fadeState.target - fadeState.current) * 0.1;
       if (fadeState.current < 0.01 && fadeState.target === 0) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         return;
@@ -61,16 +81,13 @@ export function BackgroundCanvas() {
       const fade = Math.min(1, fadeState.current);
 
       // Smooth the pointer toward the cursor; energy fades when it leaves
-      pointer.x += (pointer.tx - pointer.x) * 0.12;
-      pointer.y += (pointer.ty - pointer.y) * 0.12;
-      pointer.energy += ((pointer.inside ? 1 : 0) - pointer.energy) * 0.06;
+      pointer.x += (pointer.tx - pointer.x) * 0.24;
+      pointer.y += (pointer.ty - pointer.y) * 0.24;
+      pointer.energy += ((pointer.inside ? 1 : 0) - pointer.energy) * 0.12;
 
       const t = reduced ? 0 : now / 9000;
       const { width: w, height: h } = canvas;
       const bumpR = 150 * dpr;
-      const ink = getComputedStyle(document.documentElement)
-        .getPropertyValue("--label-d")
-        .trim();
 
       // Three wandering peaks — the ones Zake has summited
       const peaks = [
@@ -206,6 +223,7 @@ export function BackgroundCanvas() {
     return () => {
       cancelAnimationFrame(raf);
       io.disconnect();
+      themeWatch.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerleave", onLeave);

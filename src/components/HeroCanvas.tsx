@@ -259,14 +259,25 @@ export function HeroCanvas() {
 
     const ACCENTS = [ACCENT.alpine, ACCENT.bjj, ACCENT.swim, ACCENT.music];
 
+    // Cache the ink color; re-read only when the theme class flips
+    const readInk = () =>
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--label-d")
+        .trim();
+    let ink = readInk();
+    const themeWatch = new MutationObserver(() => {
+      ink = readInk();
+    });
+    themeWatch.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
     const draw = (now: number) => {
       if (!reduced) raf = requestAnimationFrame(draw);
       if (!inView) return;
       const t = reduced ? 0 : now / 1000;
       const cycle = t % CYCLE_S;
-      const ink = getComputedStyle(document.documentElement)
-        .getPropertyValue("--label-d")
-        .trim();
 
       // Smooth the pointer toward the cursor; energy fades when it leaves
       pointer.x += (pointer.tx - pointer.x) * 0.12;
@@ -307,6 +318,7 @@ export function HeroCanvas() {
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
+      themeWatch.disconnect();
       window.removeEventListener("pointermove", onMove);
     };
   }, []);

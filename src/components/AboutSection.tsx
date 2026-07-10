@@ -11,7 +11,8 @@ import {
   WaveIcon,
 } from "@/components/icons";
 
-/* Hand-drawn "Zake" signature, stroke-drawn on scroll into view */
+/* Hand-drawn "Zake" signature, re-written every time it scrolls into view:
+   offset resets instantly (no transition) while hidden, then draws on entry */
 function Signature({ active }: { active: boolean }) {
   return (
     <svg
@@ -30,7 +31,9 @@ function Signature({ active }: { active: boolean }) {
         style={{
           strokeDasharray: 1,
           strokeDashoffset: active ? 0 : 1,
-          transition: "stroke-dashoffset 1.4s var(--cubic-66)",
+          transition: active
+            ? "stroke-dashoffset 1.8s var(--cubic-66) 0.15s"
+            : "none",
         }}
       />
     </svg>
@@ -54,21 +57,20 @@ export function AboutSection() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Re-arm on every pass so the name is written each visit
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setSeen(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.3 },
+      ([entry]) => setSeen(entry.isIntersecting),
+      { threshold: 0.35 },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
   return (
-    <div className="grid grid-cols-12 px-4 lg:px-14 py-18 lg:py-24 lg:pb-28 w-full">
+    <div
+      id="about"
+      className="grid grid-cols-12 px-4 lg:px-14 py-18 lg:py-24 lg:pb-28 w-full snap-start"
+    >
       <div ref={ref} className="relative col-span-12 sm:col-span-4 lg:col-span-3 p-2">
         <Signature active={seen} />
         <div className="relative aspect-square overflow-hidden border border-line bg-be">

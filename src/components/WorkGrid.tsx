@@ -119,7 +119,7 @@ export function WorkGrid() {
   return (
     <section
       id="work"
-      className="px-4 lg:px-14 py-18 lg:py-24 w-full space-y-16 lg:space-y-24"
+      className="px-4 lg:px-14 py-18 lg:py-24 w-full space-y-16 lg:space-y-24 snap-start"
     >
       <div className="grid grid-cols-12 w-full">
         <IntroFilm />

@@ -69,7 +69,10 @@ function RevealLine({
 
 export function HeroSection() {
   return (
-    <div className="relative grid grid-cols-12 grid-rows-[auto_1fr] px-4 lg:px-14 py-18 lg:py-24 w-full min-h-dvh">
+    <div
+      id="hero"
+      className="relative grid grid-cols-12 grid-rows-[auto_1fr] px-4 lg:px-14 py-18 lg:py-24 w-full min-h-dvh snap-start"
+    >
       <HeroCanvas />
       <RotatingSeal />
       <div className="flex flex-col order-2 lg:order-1 lg:grid lg:grid-cols-12 col-span-12 font-mono text-base [animation:hsstFadeIn_.9s_.3s_both]">
