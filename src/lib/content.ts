@@ -123,7 +123,7 @@ export const workGroups: WorkGroup[] = [
         title: "CapCut 剪映",
         code: "CAPCUT",
         years: "2020-2022",
-        href: "https://www.capcut.com",
+        href: "https://www.youtube.com/watch?v=Hb_kz4Nmbfk",
         external: true,
         badge: "0 → 1",
         aspect: "video",

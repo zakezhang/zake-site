@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { TikTok_Sans, Fragment_Mono, Space_Mono } from "next/font/google";
+import { Fira_Sans, Fragment_Mono, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const tiktokSans = TikTok_Sans({
-  variable: "--font-tiktok",
+const firaSans = Fira_Sans({
+  variable: "--font-fira",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 const fragmentMono = Fragment_Mono({
@@ -35,7 +36,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${tiktokSans.variable} ${fragmentMono.variable} ${spaceMono.variable} h-full antialiased`}
+      className={`${firaSans.variable} ${fragmentMono.variable} ${spaceMono.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />

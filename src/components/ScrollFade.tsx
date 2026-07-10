@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Apple-style progressive glass pinned to the bottom of the viewport.
- * A single blur reads as a hard band, so this stacks masked layers whose
- * blur radius doubles step by step — the material gets denser toward the
- * edge — while rising saturation gives the refraction-through-glass feel.
- * Hides itself once the scroll container reaches the very end.
+ * Apple-style progressive glass pinned to the bottom of the viewport,
+ * alive only while content is in motion. Blur radius doubles layer by
+ * layer with rising saturation for the through-glass feel.
+ *
+ * The show/hide fade lives on each layer, never on the wrapper: a parent
+ * with animated opacity forms a compositing group that silently disables
+ * children's backdrop-filter, which reads as the blur "popping" off.
  */
 const STEPS = 6;
 
@@ -40,7 +42,7 @@ export function ScrollFade() {
       // the glass only exists while content is in motion
       setScrolling(true);
       window.clearTimeout(idleTimer);
-      idleTimer = window.setTimeout(() => setScrolling(false), 900);
+      idleTimer = window.setTimeout(() => setScrolling(false), 200);
     };
     root.addEventListener("scroll", onScroll, { passive: true });
     return () => {
@@ -49,20 +51,23 @@ export function ScrollFade() {
     };
   }, []);
 
+  const shown = scrolling && !atEnd;
+  const fadeCls = cn(
+    "absolute inset-0 transition-opacity ease-out",
+    shown ? "opacity-100 duration-300" : "opacity-0 duration-700",
+  );
+
   return (
     <div
       aria-hidden
-      className={cn(
-        "z-40 fixed inset-x-0 bottom-0 h-28 lg:h-40 pointer-events-none transition-opacity duration-700 ease-out",
-        scrolling && !atEnd ? "opacity-100" : "opacity-0",
-      )}
+      className="z-40 fixed inset-x-0 bottom-0 h-28 lg:h-40 pointer-events-none"
     >
       {Array.from({ length: STEPS }, (_, i) => (
-        <div key={i} className="absolute inset-0" style={layerStyle(i)} />
+        <div key={i} className={fadeCls} style={layerStyle(i)} />
       ))}
       {/* a whisper of surface tint toward the edge */}
       <div
-        className="absolute inset-0"
+        className={fadeCls}
         style={{
           background:
             "linear-gradient(to bottom, transparent 30%, rgba(var(--label-d), 0.03) 70%, rgba(var(--background-deep), 0.35) 100%)",

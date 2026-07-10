@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-tiktok), sans-serif;
+  --font-sans: var(--font-fira), sans-serif;
   --font-mono: var(--font-fragment), monospace;
   --font-mono-2: var(--font-space), monospace;
 

@@ -19,7 +19,7 @@ function Signature({ active }: { active: boolean }) {
       viewBox="0 0 320 160"
       fill="none"
       aria-hidden
-      className="svg-sign -top-[3%] -left-[8%] absolute z-10 w-3/4 pointer-events-none text-selection"
+      className="svg-sign -top-[3%] -left-[8%] absolute z-10 w-3/4 pointer-events-none text-white mix-blend-difference"
     >
       <path
         d="M28 38 C70 22 118 20 128 30 C136 38 96 54 74 78 C56 98 48 116 62 122 C84 131 122 96 150 78 C166 68 176 70 170 84 C164 98 158 112 168 114 C180 116 196 92 208 80 C216 72 224 74 222 84 C220 96 218 110 228 110 C242 110 252 84 268 72 C280 63 294 66 292 78"
