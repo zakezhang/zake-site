@@ -19,7 +19,7 @@ function Signature({ active }: { active: boolean }) {
       viewBox="0 0 320 160"
       fill="none"
       aria-hidden
-      className="svg-sign -top-[3%] -left-[8%] absolute z-10 w-3/4 pointer-events-none text-white mix-blend-difference"
+      className="svg-sign -top-[3%] -left-[8%] absolute z-10 w-3/4 pointer-events-none text-selection"
     >
       <path
         d="M28 38 C70 22 118 20 128 30 C136 38 96 54 74 78 C56 98 48 116 62 122 C84 131 122 96 150 78 C166 68 176 70 170 84 C164 98 158 112 168 114 C180 116 196 92 208 80 C216 72 224 74 222 84 C220 96 218 110 228 110 C242 110 252 84 268 72 C280 63 294 66 292 78"
@@ -69,9 +69,13 @@ export function AboutSection() {
   return (
     <div
       id="about"
-      className="grid grid-cols-12 px-4 lg:px-14 py-18 lg:py-24 lg:pb-28 w-full snap-start"
+      className="grid grid-cols-12 px-4 lg:px-14 py-18 lg:py-24 lg:pb-28 w-full snap-start snap-always"
     >
-      <div ref={ref} className="relative col-span-12 sm:col-span-4 lg:col-span-3 p-2">
+      <div
+        ref={ref}
+        data-barrel
+        className="relative col-span-12 sm:col-span-4 lg:col-span-3 p-2"
+      >
         <Signature active={seen} />
         <div className="relative aspect-square overflow-hidden border border-line bg-be">
           <Image
@@ -83,9 +87,6 @@ export function AboutSection() {
             loading="eager"
             className="object-cover"
           />
-          <span className="absolute bottom-2 left-2 font-mono-2 text-xs uppercase text-white mix-blend-difference">
-            {about.portraitNote}
-          </span>
         </div>
         <ul className="mt-4 space-y-2">
           {about.facets.map((facet) => {
@@ -102,7 +103,10 @@ export function AboutSection() {
           })}
         </ul>
       </div>
-      <div className="flex flex-col justify-start items-start gap-6 col-span-12 sm:col-span-7 sm:col-start-6 lg:col-span-8 lg:col-start-5 mt-10 sm:mt-0">
+      <div
+        data-barrel
+        className="flex flex-col justify-start items-start gap-6 col-span-12 sm:col-span-7 sm:col-start-6 lg:col-span-8 lg:col-start-5 mt-10 sm:mt-0"
+      >
         <p className="p-2 w-full text-l1 md:text-[4.2svw] text-xl leading-[1.3] md:leading-none select-text">
           {about.lead}
         </p>

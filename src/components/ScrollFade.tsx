@@ -28,17 +28,25 @@ function layerStyle(i: number): React.CSSProperties {
 
 export function ScrollFade() {
   const [atEnd, setAtEnd] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   useEffect(() => {
     const root = document.querySelector<HTMLElement>(".no-scrollbar");
     if (!root) return;
+    let idleTimer = 0;
     const onScroll = () => {
       const remaining = root.scrollHeight - root.scrollTop - root.clientHeight;
       setAtEnd(remaining < 24);
+      // the glass only exists while content is in motion
+      setScrolling(true);
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => setScrolling(false), 900);
     };
-    onScroll();
     root.addEventListener("scroll", onScroll, { passive: true });
-    return () => root.removeEventListener("scroll", onScroll);
+    return () => {
+      window.clearTimeout(idleTimer);
+      root.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
@@ -46,7 +54,7 @@ export function ScrollFade() {
       aria-hidden
       className={cn(
         "z-40 fixed inset-x-0 bottom-0 h-28 lg:h-40 pointer-events-none transition-opacity duration-700 ease-out",
-        atEnd ? "opacity-0" : "opacity-100",
+        scrolling && !atEnd ? "opacity-100" : "opacity-0",
       )}
     >
       {Array.from({ length: STEPS }, (_, i) => (

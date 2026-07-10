@@ -119,13 +119,13 @@ export function WorkGrid() {
   return (
     <section
       id="work"
-      className="px-4 lg:px-14 py-18 lg:py-24 w-full space-y-16 lg:space-y-24 snap-start"
+      className="px-4 lg:px-14 py-18 lg:py-24 w-full space-y-16 lg:space-y-24 snap-start snap-always"
     >
-      <div className="grid grid-cols-12 w-full">
+      <div data-barrel className="grid grid-cols-12 w-full">
         <IntroFilm />
       </div>
       {workGroups.map((group) => (
-        <div key={group.label}>
+        <div key={group.label} data-barrel>
           <Reveal className="flex items-center gap-3 p-2 mb-4 font-mono-2 text-xs lg:text-sm uppercase text-l3">
             <span>{group.label}</span>
             <span aria-hidden className="flex-1 border-t border-line" />

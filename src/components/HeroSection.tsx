@@ -71,11 +71,14 @@ export function HeroSection() {
   return (
     <div
       id="hero"
-      className="relative grid grid-cols-12 grid-rows-[auto_1fr] px-4 lg:px-14 py-18 lg:py-24 w-full min-h-dvh snap-start"
+      className="relative grid grid-cols-12 grid-rows-[auto_1fr] px-4 lg:px-14 py-18 lg:py-24 w-full min-h-dvh snap-start snap-always"
     >
       <HeroCanvas />
       <RotatingSeal />
-      <div className="flex flex-col order-2 lg:order-1 lg:grid lg:grid-cols-12 col-span-12 font-mono text-base [animation:hsstFadeIn_.9s_.3s_both]">
+      <div
+        data-barrel
+        className="flex flex-col order-2 lg:order-1 lg:grid lg:grid-cols-12 col-span-12 font-mono text-base [animation:hsstFadeIn_.9s_.3s_both]"
+      >
         <span className="hidden lg:block lg:col-span-3 xl:col-span-2 lg:col-start-1 xl:col-start-1 p-2 font-sans">
           {hero.discipline[0]}
           <br />
@@ -103,7 +106,10 @@ export function HeroSection() {
           {hero.bio.after}
         </span>
       </div>
-      <div className="flex flex-col self-end order-1 lg:order-2 col-span-12 px-2 font-bold text-[13svw] lg:text-[9svw] leading-[0.98] tracking-tight">
+      <div
+        data-barrel
+        className="flex flex-col self-end order-1 lg:order-2 col-span-12 px-2 font-bold text-[13svw] lg:text-[9svw] leading-[0.98] tracking-tight"
+      >
         {hero.display.map((line, i) => (
           <RevealLine
             key={line.text}

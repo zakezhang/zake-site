@@ -42,7 +42,7 @@ export const about = {
     { icon: "mountain", label: "Mountaineer — 7546m" },
     { icon: "belt", label: "Brazilian Jiu-Jitsu — Blue Belt" },
     { icon: "wave", label: "Swimming — 50m in 29.8s" },
-    { icon: "film", label: "AI Filmmaking" },
+    { icon: "film", label: "Building AI products for creators" },
   ],
 };
 

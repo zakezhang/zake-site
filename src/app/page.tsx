@@ -1,5 +1,6 @@
 import { AboutSection } from "@/components/AboutSection";
 import { BackgroundCanvas } from "@/components/BackgroundCanvas";
+import { BarrelEffect } from "@/components/BarrelEffect";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { HeroSection } from "@/components/HeroSection";
 import { Loader } from "@/components/Loader";
@@ -29,6 +30,7 @@ export default function Home() {
       </div>
       <ScrollFade />
       <ScrollRail />
+      <BarrelEffect />
       <BackgroundCanvas />
     </>
   );

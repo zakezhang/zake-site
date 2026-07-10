@@ -7,9 +7,12 @@ export function SiteFooter() {
   return (
     <footer
       id="contact"
-      className="z-10 relative flex flex-col justify-center p-6 lg:p-16 w-full min-h-dvh snap-start"
+      className="z-10 relative flex flex-col justify-center p-6 lg:p-16 w-full min-h-dvh snap-start snap-always"
     >
-      <p className="w-full text-center font-bold text-[6svw] lg:text-[4.6svw] leading-[1.15] text-balance">
+      <p
+        data-barrel
+        className="w-full text-center font-bold text-[6svw] lg:text-[4.6svw] leading-[1.15] text-balance"
+      >
         <span className="bg-selection px-[0.12em] text-black [box-decoration-break:clone] [-webkit-box-decoration-break:clone]">
           {footer.line}
         </span>
