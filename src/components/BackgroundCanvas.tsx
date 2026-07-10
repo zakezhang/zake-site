@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import {
   ACCENT_LIST,
   CYCLE_S,
-  SCENE_PAINTERS,
+  createScenePainters,
   sceneAlpha,
   type SceneEnv,
 } from "@/lib/facetScenes";
@@ -72,6 +72,7 @@ export function BackgroundCanvas() {
       attributeFilter: ["class"],
     });
 
+    const painters = createScenePainters();
     let frame = 0;
 
     const draw = (now: number) => {
@@ -100,7 +101,7 @@ export function BackgroundCanvas() {
 
       let dominant = 0;
       let best = 0;
-      SCENE_PAINTERS.forEach((paint, i) => {
+      painters.forEach((paint, i) => {
         const a = reduced ? (i === 0 ? 1 : 0) : sceneAlpha(cycle, i);
         if (a > best) {
           best = a;
@@ -117,6 +118,7 @@ export function BackgroundCanvas() {
             a: scoped,
             t,
             bump,
+            pointer,
           };
           paint(env);
         }

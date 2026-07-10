@@ -1,23 +1,29 @@
 import type { Metadata } from "next";
-import { Fira_Sans, Fragment_Mono, Space_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const firaSans = Fira_Sans({
+/* Self-hosted (src/fonts) so builds never depend on fonts.googleapis.com
+   and visitors behind slow routes load type from our own origin. */
+const firaSans = localFont({
   variable: "--font-fira",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  src: [
+    { path: "../fonts/fira-sans-400.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/fira-sans-500.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/fira-sans-700.woff2", weight: "700", style: "normal" },
+  ],
 });
 
-const fragmentMono = Fragment_Mono({
+const fragmentMono = localFont({
   variable: "--font-fragment",
-  subsets: ["latin"],
-  weight: "400",
+  src: [{ path: "../fonts/fragment-mono-400.woff2", weight: "400", style: "normal" }],
 });
 
-const spaceMono = Space_Mono({
+const spaceMono = localFont({
   variable: "--font-space",
-  subsets: ["latin"],
-  weight: ["400", "700"],
+  src: [
+    { path: "../fonts/space-mono-400.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/space-mono-700.woff2", weight: "700", style: "normal" },
+  ],
 });
 
 export const metadata: Metadata = {
