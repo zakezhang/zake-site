@@ -13,7 +13,7 @@ export const hero = {
     before: "I'm Zake Zhang, head of ",
     link: { label: "VidMuse", href: "https://vidmuse.ai" },
     after:
-      " — an AI video agent that turns music into film. Previously PM at CapCut and OnePlus. Off-screen I climb mountains, swim, and train jiu-jitsu.",
+      " — an AI video agent. Previously PM at CapCut and OnePlus. Off-screen I climb mountains, swim, and train jiu-jitsu.",
   },
   display: [
     { text: "I turn" },
@@ -24,19 +24,19 @@ export const hero = {
 };
 
 export const about = {
-  lead: "I explore how AI reshapes filmmaking — building agents that turn a song, a script, a spark into moving image.",
+  lead: "I explore how AI reshapes content creation — building agents that turn any spark into moving image.",
   body: [
     { text: "I'm building " },
-    { text: "VidMuse™", href: "https://vidmuse.ai" },
+    { text: "VidMuse", href: "https://vidmuse.ai" },
     { text: " with " },
     { text: "Kian", href: "https://www.heykian.com/en" },
     { text: " and " },
     { text: "Vibable", href: "https://vibable.sandaii.cn/" },
-    { text: ". Before this I took " },
+    { text: " — ex " },
     { text: "CapCut", href: "https://www.capcut.com" },
-    { text: " from 0 to 1 at ByteDance, and served as " },
+    { text: " 0→1, ex " },
     { text: "OnePlus", href: "https://www.youtube.com/live/rQEtyuhLEAA?t=2290" },
-    { text: "'s imaging PM and keynote speaker." },
+    { text: " PM & keynote speaker." },
   ],
   portrait: "/images/portrait.jpg",
   portraitNote: "ZAKE ZHANG — 59.33°N 18.07°E",
@@ -46,6 +46,12 @@ export const about = {
     { icon: "wave", label: "Swimming — 50m in 29.8s" },
     { icon: "film", label: "Building AI products for creators" },
   ],
+};
+
+export const careerThread = {
+  line: "Ten years, one thread: making images move.",
+  ticker:
+    "2016 VR GAMES, BOULDER CO → 2018 ONEPLUS IMAGING & KEYNOTES → 2020 CAPCUT 0→1 → 2023 GAP YEAR, SWEDEN → 2025 VIDMUSE",
 };
 
 export const introFilm = {
@@ -75,7 +81,7 @@ export const workGroups: WorkGroup[] = [
       {
         no: "01",
         image: "/images/work/vidmuse-2026.jpg",
-        title: "VidMuse™",
+        title: "VidMuse",
         code: "VIDMUSE",
         years: "2025-NOW",
         href: "https://vidmuse.ai",

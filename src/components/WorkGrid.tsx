@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { workGroups } from "@/lib/content";
+import { careerThread, workGroups } from "@/lib/content";
 import type { WorkIcon, WorkItem } from "@/types/content";
 import { cn } from "@/lib/utils";
 import { FilmCard, IntroFilm } from "@/components/IntroFilm";
@@ -143,6 +143,16 @@ export function WorkGrid() {
               <WorkCard key={item.no} item={item} delay={i * 90} />
             ))}
           </div>
+          {group.label === "Career" && (
+            <Reveal className="mt-10 lg:mt-12 space-y-3 p-2">
+              <p className="font-bold text-lg lg:text-2xl text-l1">
+                {careerThread.line}
+              </p>
+              <p className="font-mono-2 text-xs lg:text-sm uppercase tracking-wide text-l3 whitespace-nowrap overflow-x-auto no-scrollbar">
+                {careerThread.ticker}
+              </p>
+            </Reveal>
+          )}
         </div>
       ))}
     </section>
