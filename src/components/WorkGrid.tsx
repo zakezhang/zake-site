@@ -144,8 +144,8 @@ export function WorkGrid() {
             ))}
           </div>
           {group.label === "Career" && (
-            <Reveal className="mt-10 lg:mt-12 space-y-3 p-2">
-              <p className="font-bold text-lg lg:text-2xl text-l1">
+            <Reveal className="mt-10 lg:mt-14 space-y-4 p-2">
+              <p className="w-full text-l1 md:text-[4.2svw] text-xl leading-[1.3] md:leading-none select-text">
                 {careerThread.line}
               </p>
               <p className="font-mono-2 text-xs lg:text-sm uppercase tracking-wide text-l3 whitespace-nowrap overflow-x-auto no-scrollbar">
