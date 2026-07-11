@@ -3,11 +3,17 @@
 import { useEffect } from "react";
 
 /**
- * Barrel-wall scroll illusion: every [data-barrel] block tilts away and
- * shrinks slightly as it approaches the viewport edges, as if the page
- * were pasted on the inside of a drum. Center-origin rotateX + scale keep
- * each block's midpoint fixed, so the math never feeds back on itself.
+ * Barrel-wall scroll illusion, alive only while the page is in motion:
+ * [data-barrel] blocks tilt away and shrink toward the viewport edges as
+ * if pasted on the inside of a spinning drum. Intensity ramps up with
+ * scrolling and every block springs back perfectly flat ~140ms after the
+ * last scroll tick, so a resting page always reads crisp and undistorted.
  */
+const MAX_ROT = 13; // deg at the viewport edges
+const MAX_SHRINK = 0.08;
+const IDLE_MS = 140;
+const RETURN_MS = 280;
+
 export function BarrelEffect() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -18,7 +24,10 @@ export function BarrelEffect() {
     );
     if (els.length === 0) return;
 
+    let intensity = 0;
     let ticking = false;
+    let idleTimer = 0;
+
     const apply = () => {
       ticking = false;
       const vh = root.clientHeight;
@@ -33,24 +42,38 @@ export function BarrelEffect() {
         d = Math.max(-0.9, Math.min(0.9, d));
         // tall blocks tilt less so long sections don't lean permanently
         const damp = Math.min(1, (vh * 1.4) / Math.max(1, r.height));
-        const rot = -d * 9 * damp;
-        const scale = 1 - Math.abs(d) * 0.05 * damp;
-        el.style.transform = `perspective(1400px) rotateX(${rot.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
+        const rot = -d * MAX_ROT * damp * intensity;
+        const scale = 1 - Math.abs(d) * MAX_SHRINK * damp * intensity;
+        el.style.transition = "none";
+        el.style.transform = `perspective(1000px) rotateX(${rot.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
       }
     };
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(apply);
+
+    // spring everything back flat the moment scrolling rests
+    const relax = () => {
+      intensity = 0;
+      for (const el of els) {
+        el.style.transition = `transform ${RETURN_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+        el.style.transform = "";
+      }
     };
 
-    apply();
+    const onScroll = () => {
+      intensity = Math.min(1, intensity + 0.14);
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(relax, IDLE_MS);
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(apply);
+      }
+    };
+
     root.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
     return () => {
+      window.clearTimeout(idleTimer);
       root.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
       els.forEach((el) => {
+        el.style.transition = "";
         el.style.transform = "";
       });
     };

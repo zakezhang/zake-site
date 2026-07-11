@@ -19,8 +19,9 @@ export function GrainOverlay() {
     ).matches;
 
     const resize = () => {
-      canvas.width = Math.ceil(window.innerWidth / SCALE);
-      canvas.height = Math.ceil(window.innerHeight / SCALE);
+      // zero-sized windows (background prerender, headless) must not crash
+      canvas.width = Math.max(1, Math.ceil(window.innerWidth / SCALE));
+      canvas.height = Math.max(1, Math.ceil(window.innerHeight / SCALE));
     };
     resize();
     window.addEventListener("resize", resize);
