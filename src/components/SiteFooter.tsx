@@ -7,7 +7,7 @@ export function SiteFooter() {
   return (
     <footer
       id="contact"
-      className="z-10 relative flex flex-col justify-center p-6 lg:p-16 w-full min-h-dvh snap-start snap-always"
+      className="z-20 relative flex flex-col justify-center p-6 lg:p-16 w-full min-h-dvh snap-start snap-always pointer-events-none"
     >
       <p
         data-barrel

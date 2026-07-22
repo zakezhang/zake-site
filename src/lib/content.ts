@@ -299,6 +299,32 @@ export const stickyCta = {
   routes: "Luoke 70km · Kungsleden 110km · TMB 170km · Tre Cime 10km",
 };
 
+/** Photo gallery dealt around the motto page — sourced from the
+ *  "Zake web" folder. Filenames carry a content hash so caches can
+ *  never serve stale pixels; pixels are stored upright (no EXIF
+ *  rotation dependence) and `ar` is the exact display ratio. */
+export const ctaGallery = [
+  { src: "/images/gallery/g01-a0d250.jpg", frame: "w-44 lg:w-60", ar: "1600 / 900" },
+  { src: "/images/gallery/g02-1edd12.jpg", frame: "w-40 lg:w-52", ar: "1600 / 900" },
+  { src: "/images/gallery/g03-cdcbd3.jpg", frame: "w-28 lg:w-36", ar: "1200 / 1600" },
+  { src: "/images/gallery/g04-5d4d77.jpg", frame: "w-36 lg:w-44", ar: "1600 / 1600" },
+  { src: "/images/gallery/g05-cfb062.jpg", frame: "w-40 lg:w-48", ar: "1600 / 1466" },
+  { src: "/images/gallery/g06-31df30.jpg", frame: "w-32 lg:w-40", ar: "1067 / 1600" },
+  { src: "/images/gallery/g07-e107cd.jpg", frame: "w-28 lg:w-32", ar: "1067 / 1600" },
+  { src: "/images/gallery/g08-4413e3.jpg", frame: "w-28 lg:w-36", ar: "1066 / 1600" },
+  { src: "/images/gallery/g09-758088.jpg", frame: "w-32 lg:w-40", ar: "1066 / 1600" },
+  { src: "/images/gallery/g10-eb948c.jpg", frame: "w-28 lg:w-32", ar: "1167 / 1600" },
+  { src: "/images/gallery/g11-7b0e1e.jpg", frame: "w-28 lg:w-36", ar: "1200 / 1600" },
+  { src: "/images/gallery/g12-a5fb1b.jpg", frame: "w-44 lg:w-56", ar: "1600 / 909" },
+  { src: "/images/gallery/g13-35377d.jpg", frame: "w-32 lg:w-40", ar: "1200 / 1600" },
+  { src: "/images/gallery/g14-e21d2b.jpg", frame: "w-28 lg:w-32", ar: "1200 / 1600" },
+  { src: "/images/gallery/g15-9485dc.jpg", frame: "w-36 lg:w-44", ar: "1600 / 1600" },
+  { src: "/images/gallery/g16-4742f2.jpg", frame: "w-36 lg:w-44", ar: "1600 / 1580" },
+  { src: "/images/gallery/g17-0bcbbc.jpg", frame: "w-28 lg:w-36", ar: "1200 / 1600" },
+  { src: "/images/gallery/g18-02d586.jpg", frame: "w-32 lg:w-40", ar: "1069 / 1600" },
+  { src: "/images/gallery/g19-4aec4c.jpg", frame: "w-44 lg:w-60", ar: "1600 / 940" },
+] as const;
+
 export const footer = {
   line: "Let's live a life worth remembering",
   email: "zake.august93@gmail.com",
