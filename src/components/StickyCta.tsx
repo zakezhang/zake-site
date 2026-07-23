@@ -288,8 +288,10 @@ export function StickyCta() {
     });
 
     const SPREAD_START = 0.24;
+    const SPREAD_SPAN = 0.58; // dealing occupies p ∈ [start, start + span]
     const WIN = 0.12;
-    const step = n > 1 ? (0.58 - WIN) / (n - 1) : 0;
+    const step = n > 1 ? (SPREAD_SPAN - WIN) / (n - 1) : 0;
+    const DEAL_END = SPREAD_START + SPREAD_SPAN;
 
     let ticking = false;
     const render = () => {
@@ -337,11 +339,12 @@ export function StickyCta() {
         motto.style.transform = `scale(${(0.55 + backOut(mt) * 0.45).toFixed(3)})`;
       }
       if (legendRef.current) legendRef.current.style.opacity = String(mt);
-      // the photos recede in lockstep with the motto's own entrance (same
-      // ramp as its opacity, eased so the fade starts and settles gently);
-      // since the fixed layer persists over the footer, the dim carries to
-      // the last page too. Hover/drag lighting is handled in CSS (.cta-photo)
-      const dimT = easeInOut(clamp01(mt * 1.8));
+      // the photos start receding the moment the last card settles — filling
+      // the beat before the motto fades in, so the words inherit the viewer's
+      // focus as they appear; since the fixed layer persists over the footer,
+      // the dim carries to the last page too. Hover/drag lighting is handled
+      // in CSS (.cta-photo)
+      const dimT = easeInOut(clamp01((p - DEAL_END) / 0.1));
       layer?.style.setProperty("--photo-dim", (1 - 0.72 * dimT).toFixed(3));
     };
 
