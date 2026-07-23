@@ -115,3 +115,16 @@
     display: none;
   }
 }
+
+/* Gallery photos recede while the motto (and later the footer line) holds
+   the stage — the layer's --photo-dim is driven by scroll progress. A photo
+   under the pointer (or being dragged) lights back up on its own. */
+.cta-photo {
+  opacity: var(--photo-dim, 1);
+  transition: opacity 0.95s var(--ease-66);
+}
+.cta-photo:hover,
+.cta-photo:active {
+  opacity: 1;
+  transition-duration: 0.25s;
+}

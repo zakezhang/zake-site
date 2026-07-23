@@ -337,6 +337,12 @@ export function StickyCta() {
         motto.style.transform = `scale(${(0.55 + backOut(mt) * 0.45).toFixed(3)})`;
       }
       if (legendRef.current) legendRef.current.style.opacity = String(mt);
+      // the photos recede in lockstep with the motto's own entrance (same
+      // ramp as its opacity, eased so the fade starts and settles gently);
+      // since the fixed layer persists over the footer, the dim carries to
+      // the last page too. Hover/drag lighting is handled in CSS (.cta-photo)
+      const dimT = easeInOut(clamp01(mt * 1.8));
+      layer?.style.setProperty("--photo-dim", (1 - 0.72 * dimT).toFixed(3));
     };
 
     const onScroll = () => {
@@ -431,7 +437,7 @@ export function StickyCta() {
             ref={(el) => {
               photoRefs.current[i] = el;
             }}
-            className="absolute left-1/2 top-1/2 pointer-events-auto touch-none select-none cursor-grab active:cursor-grabbing"
+            className="cta-photo absolute left-1/2 top-1/2 pointer-events-auto touch-none select-none cursor-grab active:cursor-grabbing"
             onPointerDown={(e) => {
               e.preventDefault();
               const el = e.currentTarget;
