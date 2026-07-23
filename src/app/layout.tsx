@@ -27,6 +27,7 @@ const spaceMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://zakezhang.com"),
   title: "ZAKE©2026",
   description: "AI Founder & Storyteller © 2026",
 };
