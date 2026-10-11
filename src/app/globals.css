@@ -128,3 +128,19 @@
   opacity: 1;
   transition-duration: 0.25s;
 }
+
+/* film grain: 12 random offsets, held one step each (24fps over 0.5s) */
+@keyframes grainShift {
+  0.0% { transform: translate3d(-85px, 235px, 0); }
+  8.33% { transform: translate3d(-173px, -48px, 0); }
+  16.67% { transform: translate3d(83px, -226px, 0); }
+  25.0% { transform: translate3d(-213px, 170px, 0); }
+  33.33% { transform: translate3d(24px, -202px, 0); }
+  41.67% { transform: translate3d(-63px, 48px, 0); }
+  50.0% { transform: translate3d(-221px, 215px, 0); }
+  58.33% { transform: translate3d(9px, -141px, 0); }
+  66.67% { transform: translate3d(-231px, -206px, 0); }
+  75.0% { transform: translate3d(-28px, -36px, 0); }
+  83.33% { transform: translate3d(-215px, -127px, 0); }
+  91.67% { transform: translate3d(-204px, 32px, 0); }
+}

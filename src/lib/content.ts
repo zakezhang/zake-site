@@ -20,7 +20,6 @@ export const hero = {
     { text: "life & code" },
     { text: "into stories", highlight: true },
   ],
-  seal: "ZAKE ZHANG • LIFE & CODE INTO STORIES • EST. 1993 • ",
 };
 
 export const about = {

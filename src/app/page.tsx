@@ -9,6 +9,7 @@ import { ScrollRail } from "@/components/ScrollRail";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { StickyCta } from "@/components/StickyCta";
+import { CodeCube } from "@/components/toys/CodeCube";
 import { WorkGrid } from "@/components/WorkGrid";
 
 export default function Home() {
@@ -20,7 +21,7 @@ export default function Home() {
       <div className="fixed inset-0 w-full h-full">
         <div className="w-full h-full overflow-y-auto overscroll-contain no-scrollbar snap-y snap-mandatory scroll-smooth">
           <div className="[animation:hsstFadeIn_.9s_.5s_both]">
-            <HeroSection />
+            <HeroSection toy={<CodeCube />} />
             <AboutSection />
             <WorkGrid />
             <StickyCta />

@@ -1,44 +1,13 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { hero } from "@/lib/content";
-import { HeroCanvas } from "@/components/HeroCanvas";
 import {
   BeltIcon,
   FilmIcon,
   MountainIcon,
   WaveIcon,
 } from "@/components/icons";
-
-/* Slow-spinning circular stamp — the page's wax seal */
-function RotatingSeal() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute right-8 lg:right-20 top-[46%] lg:top-[42%] size-24 lg:size-32 text-l2"
-    >
-      <svg
-        viewBox="0 0 100 100"
-        className="size-full [animation:rtSpin_18s_linear_infinite] motion-reduce:animate-none"
-      >
-        <defs>
-          <path
-            id="seal-circle"
-            d="M50,50 m-40,0 a40,40 0 1,1 80,0 a40,40 0 1,1 -80,0"
-          />
-        </defs>
-        <text
-          className="font-mono-2 uppercase"
-          fontSize="7.6"
-          letterSpacing="0.4"
-          fill="currentColor"
-        >
-          <textPath href="#seal-circle">{hero.seal}</textPath>
-        </text>
-      </svg>
-      <MountainIcon className="absolute left-1/2 top-1/2 size-6 lg:size-7 -translate-x-1/2 -translate-y-1/2 text-l1" />
-    </div>
-  );
-}
 
 function RevealLine({
   text,
@@ -67,14 +36,22 @@ function RevealLine({
   );
 }
 
-export function HeroSection() {
+export function HeroSection({
+  toy,
+}: {
+  /** an interactive object living in the empty right half of the hero */
+  toy?: ReactNode;
+}) {
   return (
     <div
       id="hero"
       className="relative grid grid-cols-12 grid-rows-[auto_1fr] px-4 lg:px-14 py-18 lg:py-24 w-full min-h-dvh snap-start snap-always"
     >
-      <HeroCanvas />
-      <RotatingSeal />
+      {toy && (
+        <div className="hidden lg:flex absolute z-10 right-14 xl:right-24 top-[24%] bottom-[12%] w-[38%] items-center justify-center pointer-events-none">
+          <div className="pointer-events-auto">{toy}</div>
+        </div>
+      )}
       <div
         data-barrel
         className="flex flex-col order-2 lg:order-1 lg:grid lg:grid-cols-12 col-span-12 font-mono text-base [animation:hsstFadeIn_.9s_.3s_both]"

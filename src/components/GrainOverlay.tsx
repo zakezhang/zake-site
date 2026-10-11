@@ -2,57 +2,63 @@
 
 import { useEffect, useRef } from "react";
 
-const FPS = 12;
-const SCALE = 3;
+const TILE = 256; // CSS px
 
+/** gaussian-ish sample in [-1, 1]: film grain clusters around mid-grey */
+const grain = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+
+/**
+ * Fine, moving film grain behind the content. One tile is drawn once at
+ * device-pixel resolution (one grain per physical pixel); an oversized layer
+ * then jumps between random offsets with a stepped CSS transform, so the
+ * motion runs entirely on the compositor and never touches the main thread.
+ */
 export function GrainOverlay() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const el = ref.current;
+    if (!el) return;
+    const dpr = Math.min(3, Math.max(1, window.devicePixelRatio || 1));
+    const size = Math.round(TILE * dpr);
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    const resize = () => {
-      // zero-sized windows (background prerender, headless) must not crash
-      canvas.width = Math.max(1, Math.ceil(window.innerWidth / SCALE));
-      canvas.height = Math.max(1, Math.ceil(window.innerHeight / SCALE));
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const draw = () => {
-      const { width, height } = canvas;
-      const image = ctx.createImageData(width, height);
-      const data = image.data;
-      for (let i = 0; i < data.length; i += 4) {
-        const v = (Math.random() * 255) | 0;
-        data[i] = v;
-        data[i + 1] = v;
-        data[i + 2] = v;
-        data[i + 3] = 255;
-      }
-      ctx.putImageData(image, 0, 0);
-    };
-
-    draw();
-    let id = 0;
-    if (!reduced) id = window.setInterval(draw, 1000 / FPS);
+    // light grains lift, dark grains sink — the mean stays neutral on any theme
+    const img = ctx.createImageData(size, size);
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const v = grain();
+      const c = v > 0 ? 255 : 0;
+      d[i] = c;
+      d[i + 1] = c;
+      d[i + 2] = c;
+      d[i + 3] = Math.min(255, Math.abs(v) * 255);
+    }
+    ctx.putImageData(img, 0, 0);
+    let url = "";
+    let cancelled = false;
+    canvas.toBlob((blob) => {
+      if (!blob || cancelled) return;
+      url = URL.createObjectURL(blob);
+      el.style.backgroundImage = `url(${url})`;
+      el.style.backgroundSize = `${TILE}px ${TILE}px`;
+    }, "image/png");
     return () => {
-      window.clearInterval(id);
-      window.removeEventListener("resize", resize);
+      cancelled = true;
+      if (url) URL.revokeObjectURL(url);
     };
   }, []);
 
   return (
     // Sits behind the content as background texture; text and media stay crisp
-    <div className="-z-[2] fixed inset-0 pointer-events-none opacity-[0.05] dark:opacity-[0.07]">
-      <canvas ref={canvasRef} className="w-full h-full" />
+    <div aria-hidden className="-z-[2] fixed inset-0 overflow-hidden pointer-events-none opacity-[0.09] dark:opacity-[0.12]">
+      <div
+        ref={ref}
+        className="absolute -inset-[256px] [image-rendering:pixelated] will-change-transform motion-safe:[animation:grainShift_0.5s_steps(1)_infinite]"
+      />
     </div>
   );
 }
